@@ -1,39 +1,39 @@
 package com.mclegoman.ashore.mixin;
 
+import net.minecraft.block.BlockState;
+import net.minecraft.block.LilyPadBlock;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.vehicle.BoatEntity;
+import net.minecraft.util.function.BooleanBiFunction;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Box;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.shape.VoxelShape;
+import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(BoatEntity.class)
 public abstract class AshoreBoatEntityMixin extends Entity {
 	@Shadow private float velocityDecay;
-
 	@Shadow private BoatEntity.Location location;
-
 	@Shadow private BoatEntity.Location lastLocation;
-
 	@Shadow private double waterLevel;
-
 	@Shadow public abstract float getWaterHeightBelow();
-
 	@Shadow private double fallVelocity;
-
 	@Shadow private float nearbySlipperiness;
-
 	@Shadow private float yawVelocity;
-
 	public AshoreBoatEntityMixin(EntityType<?> type, World world) {
 		super(type, world);
 	}
-
 	@Inject(method = "updateVelocity", at = @At("HEAD"), cancellable = true)
 	private void updateVelocity(CallbackInfo ci) {
 		double d = -0.03999999910593033;
@@ -59,11 +59,14 @@ public abstract class AshoreBoatEntityMixin extends Entity {
 			} else if (this.location == BoatEntity.Location.IN_AIR) {
 				this.velocityDecay = 0.9F;
 			} else if (this.location == BoatEntity.Location.ON_LAND) {
-				this.velocityDecay = 0.9F * this.nearbySlipperiness >= 0.9F ? this.nearbySlipperiness / 0.9F : 1.0F;
+				this.velocityDecay = this.nearbySlipperiness > 0.9F ? nearbySlipperiness : 0.9F;
 				if (this.getControllingPassenger() instanceof PlayerEntity) {
 					this.nearbySlipperiness /= 2.0F;
 				}
 			}
+
+			this.velocityDecay = Math.min(this.velocityDecay, 1.0F);
+
 			Vec3d vec3d = this.getVelocity();
 			this.setVelocity(vec3d.x * (double)this.velocityDecay, vec3d.y + e, vec3d.z * (double)this.velocityDecay);
 			this.yawVelocity *= this.velocityDecay;
