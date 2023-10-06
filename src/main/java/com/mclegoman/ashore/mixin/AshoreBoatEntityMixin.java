@@ -49,10 +49,10 @@ public abstract class AshoreBoatEntityMixin extends Entity {
 		} else {
 			if (this.location == BoatEntity.Location.IN_WATER) {
 				f = (this.waterLevel - this.getY()) / (double)this.getHeight();
-				this.velocityDecay = 0.45F;
+				this.velocityDecay = 0.6F;
 			} else if (this.location == BoatEntity.Location.UNDER_FLOWING_WATER) {
 				e = -7.0E-4;
-				this.velocityDecay = 0.45F;
+				this.velocityDecay = 0.6F;
 			} else if (this.location == BoatEntity.Location.UNDER_WATER) {
 				f = 0.009999999776482582;
 				this.velocityDecay = 0.45F;
