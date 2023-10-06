@@ -59,7 +59,7 @@ public abstract class AshoreBoatEntityMixin extends Entity {
 			} else if (this.location == BoatEntity.Location.IN_AIR) {
 				this.velocityDecay = 0.9F;
 			} else if (this.location == BoatEntity.Location.ON_LAND) {
-				this.velocityDecay = this.nearbySlipperiness > 0.9F ? nearbySlipperiness : 0.9F;
+				this.velocityDecay = this.nearbySlipperiness > 0.9F ? this.nearbySlipperiness : 0.9F;
 				if (this.getControllingPassenger() instanceof PlayerEntity) {
 					this.nearbySlipperiness /= 2.0F;
 				}
