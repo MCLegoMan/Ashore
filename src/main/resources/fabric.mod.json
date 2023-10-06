@@ -1,0 +1,23 @@
+{
+	"schemaVersion": 1,
+	"id": "ashore",
+	"version": "${version}",
+	"name": "Ashore",
+	"description": "Switches boat velocity. Boats are now faster on land than in water!",
+	"authors": [
+		"MCLegoMan"
+	],
+	"contact": {
+		"homepage": "https://github.com/MCLegoMan",
+		"sources": "https://github.com/MCLegoMan/Ashore"
+	},
+	"license": "CC-BY-4.0",
+	"icon": "assets/ashore/icon.png",
+	"environment": "*",
+	"mixins": [
+		"ashore.mixins.json"
+	],
+	"depends": {
+		"minecraft": "~1.20.2"
+	}
+}
