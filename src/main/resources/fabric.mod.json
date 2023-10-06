@@ -16,8 +16,5 @@
 	"environment": "*",
 	"mixins": [
 		"ashore.mixins.json"
-	],
-	"depends": {
-		"minecraft": "~1.20.2"
-	}
+	]
 }
