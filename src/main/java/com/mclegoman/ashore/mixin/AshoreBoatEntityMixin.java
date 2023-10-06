@@ -2,6 +2,7 @@ package com.mclegoman.ashore.mixin;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.vehicle.BoatEntity;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -58,7 +59,10 @@ public abstract class AshoreBoatEntityMixin extends Entity {
 			} else if (this.location == BoatEntity.Location.IN_AIR) {
 				this.velocityDecay = 0.9F;
 			} else if (this.location == BoatEntity.Location.ON_LAND) {
-				this.velocityDecay = 0.9F;
+				this.velocityDecay = 0.9F * this.nearbySlipperiness >= 0.9F ? this.nearbySlipperiness / 0.9F : 1.0F;
+				if (this.getControllingPassenger() instanceof PlayerEntity) {
+					this.nearbySlipperiness /= 2.0F;
+				}
 			}
 			Vec3d vec3d = this.getVelocity();
 			this.setVelocity(vec3d.x * (double)this.velocityDecay, vec3d.y + e, vec3d.z * (double)this.velocityDecay);
