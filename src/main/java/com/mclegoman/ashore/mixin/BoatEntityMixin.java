@@ -1,37 +1,38 @@
+/*
+    Ashore
+    Contributor(s): MCLegoMan
+    Github: https://github.com/MCLegoMan/Ashore
+    License: LGPL-3.0-or-later
+*/
+
 package com.mclegoman.ashore.mixin;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.LilyPadBlock;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.vehicle.BoatEntity;
-import net.minecraft.util.function.BooleanBiFunction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Box;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(BoatEntity.class)
-public abstract class AshoreBoatEntityMixin extends Entity {
+public abstract class BoatEntityMixin extends Entity {
 	@Shadow private float velocityDecay;
 	@Shadow private BoatEntity.Location location;
 	@Shadow private BoatEntity.Location lastLocation;
 	@Shadow private double waterLevel;
-	@Shadow public abstract float getWaterHeightBelow();
-	@Shadow private double fallVelocity;
-	@Shadow private float nearbySlipperiness;
 	@Shadow private float yawVelocity;
-	public AshoreBoatEntityMixin(EntityType<?> type, World world) {
+	@Shadow
+	public abstract float getWaterLevelAbove();
+	@Shadow
+	private double fallVelocity;
+	@Shadow
+	private float landFriction;
+	public BoatEntityMixin(EntityType<?> type, World world) {
 		super(type, world);
 	}
 	@Inject(method = "updateVelocity", at = @At("HEAD"), cancellable = true)
@@ -42,7 +43,7 @@ public abstract class AshoreBoatEntityMixin extends Entity {
 		this.velocityDecay = 0.05F;
 		if (this.lastLocation == BoatEntity.Location.IN_AIR && this.location != BoatEntity.Location.IN_AIR && this.location != BoatEntity.Location.ON_LAND) {
 			this.waterLevel = this.getBodyY(1.0);
-			this.setPosition(this.getX(), (double)(this.getWaterHeightBelow() - this.getHeight()) + 0.101, this.getZ());
+			this.setPosition(this.getX(), (double)(this.getWaterLevelAbove() - this.getHeight()) + 0.101, this.getZ());
 			this.setVelocity(this.getVelocity().multiply(1.0, 0.0, 1.0));
 			this.fallVelocity = 0.0;
 			this.location = BoatEntity.Location.IN_WATER;
@@ -59,14 +60,12 @@ public abstract class AshoreBoatEntityMixin extends Entity {
 			} else if (this.location == BoatEntity.Location.IN_AIR) {
 				this.velocityDecay = 0.9F;
 			} else if (this.location == BoatEntity.Location.ON_LAND) {
-				this.velocityDecay = this.nearbySlipperiness > 0.9F ? this.nearbySlipperiness : 0.9F;
-				if (this.getControllingPassenger() instanceof PlayerEntity) {
-					this.nearbySlipperiness /= 2.0F;
+				this.velocityDecay = this.landFriction > 0.9F ? this.landFriction : 0.9F;
+				if (this.getPrimaryPassenger() instanceof PlayerEntity) {
+					this.landFriction /= 2.0F;
 				}
 			}
-
 			this.velocityDecay = Math.min(this.velocityDecay, 1.0F);
-
 			Vec3d vec3d = this.getVelocity();
 			this.setVelocity(vec3d.x * (double)this.velocityDecay, vec3d.y + e, vec3d.z * (double)this.velocityDecay);
 			this.yawVelocity *= this.velocityDecay;
