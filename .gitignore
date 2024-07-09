@@ -17,6 +17,7 @@ bin/
 .project
 workspace/
 *.DS_Store
+.architectury-transformer
 
 common/.gradle/
 common/build/
@@ -37,6 +38,7 @@ common/.classpath
 common/.project
 common/workspace/
 common/*.DS_Store
+common/.architectury-transformer
 
 quilt/.gradle/
 quilt/build/
@@ -57,6 +59,7 @@ quilt/.classpath
 quilt/.project
 quilt/workspace/
 quilt/*.DS_Store
+quilt/.architectury-transformer
 
 neoforge/.gradle/
 neoforge/build/
@@ -77,3 +80,4 @@ neoforge/.classpath
 neoforge/.project
 neoforge/workspace/
 neoforge/*.DS_Store
+neoforge/.architectury-transformer
