@@ -3,9 +3,7 @@ Ashore is a Minecraft mod that switches boat velocity, making them slower on wat
   
 ## Mod Requirements  
 - [Quilt Loader](https://quiltmc.org/) (Recommended)  
-  - [QSL](https://modrinth.com/mod/qsl)  
 - [Fabric Loader](https://fabricmc.net/)  
-  - [Fabric API](https://modrinth.com/mod/fabric-api)  
 - [NeoForge](https://neoforged.net/)  
   
 ## FAQ  
