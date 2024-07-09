@@ -26,8 +26,7 @@ public abstract class BoatEntityMixin extends Entity {
 	@Shadow private BoatEntity.Location lastLocation;
 	@Shadow private double waterLevel;
 	@Shadow private float yawVelocity;
-	@Shadow
-	private double fallVelocity;
+	@Shadow private double fallVelocity;
 	@Shadow private float nearbySlipperiness;
 	@Shadow public abstract float getWaterHeightBelow();
 	public BoatEntityMixin(EntityType<?> type, World world) {
