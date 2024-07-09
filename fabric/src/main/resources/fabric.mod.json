@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "ashore",
+  "version": "${version}",
+  "name": "Ashore",
+  "description": "Switches boat velocity. Boats are now faster on land than in water!",
+  "authors": [
+    "MCLegoMan"
+  ],
+  "contact": {
+    "homepage": "https://modrinth.com/mod/ashore",
+    "issues": "https://github.com/MCLegoMan/ashore/issues",
+    "sources": "https://github.com/MCLegoMan/ashore/"
+  },
+  "license": "LGPL-3.0-or-later",
+  "icon": "assets/ashore/icon.png",
+  "environment": "*",
+  "mixins": [
+    "ashore.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": "*",
+    "minecraft": "~1.21"
+  }
+}

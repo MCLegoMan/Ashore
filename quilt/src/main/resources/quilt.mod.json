@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "quilt_loader": {
+    "group": "${group}",
+    "id": "ashore",
+    "version": "${version}",
+    "metadata": {
+      "name": "Ashore",
+      "description": "Switches boat velocity. Boats are now faster on land than in water!",
+      "contributors": {
+        "MCLegoMan": "Author"
+      },
+      "contact": {
+        "homepage": "https://modrinth.com/mod/ashore",
+        "issues": "https://github.com/MCLegoMan/ashore/issues",
+        "sources": "https://github.com/MCLegoMan/ashore/"
+      },
+      "icon": "assets/ashore/icon.png"
+    },
+    "intermediate_mappings": "net.fabricmc:intermediary",
+    "depends": [
+      {
+        "id": "quilt_loader",
+        "version": "*"
+      },
+      {
+        "id": "minecraft",
+        "version": "~1.21"
+      }
+    ]
+  },
+  "mixin": [
+    "ashore.mixins.json"
+  ]
+}

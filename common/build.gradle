@@ -1,0 +1,12 @@
+architectury {
+    common rootProject.enabled_platforms.split(',')
+}
+
+repositories {
+    maven { url "https://maven.quiltmc.org/repository/release" }
+}
+
+dependencies {
+    modImplementation "org.quiltmc:quilt-loader:${rootProject.quilt_loader_version}"
+    compileOnly "net.fabricmc:sponge-mixin:0.14.0+mixin.0.8.6"
+}
